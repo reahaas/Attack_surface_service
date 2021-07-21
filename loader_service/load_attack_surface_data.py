@@ -1,13 +1,10 @@
 import json
-from logging import getLogger
+
+from common_utils import log_runtime_duration, logger
+from db_service.db_python import build_tags_directed_graph, build_vms_to_potentially_attackers, DbPython
 
 
-from loader_service.fw_rules_matcher import get_potential_attackers
-
-logger = getLogger("load_attack_surface_data")
-
-
-def read_csv_file(file_path):
+def read_csv_file(file_path: str) -> dict:
     """
 
     :param file_path:
@@ -19,7 +16,7 @@ def read_csv_file(file_path):
     return data
 
 
-def read_data_file(input_file):
+def read_data_file(input_file: str) -> tuple:
     data = read_csv_file(input_file)
     vms = data.get("vms", [])
     fw_rules = data.get("fw_rules", [])
@@ -27,13 +24,15 @@ def read_data_file(input_file):
     return vms, fw_rules
 
 
-def load_attack_surface_data(input_file, db):
-    logger.info("load_attack_surface_data")
-    
+@log_runtime_duration
+def load_attack_surface_data(input_file: str, db: DbPython):
+    """
+    Load data from file and initial the db with the data structure.
+    :param input_file:
+    :param db:
+    """
     vms, fw_rules = read_data_file(input_file)
     
-    for vm in vms:
-        potential_attackers = get_potential_attackers(vm, fw_rules)
-        db.add_vm(vm.get("vm_id", ""), potential_attackers)
-    logger.info("Wooho!! load_attack_surface_data finished.")
-    logger.info(db.vms_to_potentially_attackers)
+    build_tags_directed_graph(db, fw_rules)
+    
+    build_vms_to_potentially_attackers(db, vms)
