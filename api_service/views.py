@@ -4,7 +4,6 @@ import json
 from tornado.web import RequestHandler, HTTPError
 
 from api_service.api_stats import ApiStats
-from common_utils import logger
 
 
 class MonitoredRequestHandler(RequestHandler):
@@ -40,6 +39,4 @@ class v1Handler(MonitoredRequestHandler):
 class StatsHandler(MonitoredRequestHandler):
     
     def get(self):
-        # take a look at this one:
-        # https://gist.github.com/DmitryBe/07305b2fa0f5809f5016e8e29df50f11
         self.write(ApiStats.get_stats_data())
