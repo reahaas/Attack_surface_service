@@ -5,28 +5,24 @@ import networkx as nx
 from common_utils import flatten, remove_duplication
 
 
-def setup_db():
-    return DbPython()
-
-
 class DbPython():
     def __init__(self):
-        self.vms_to_potentially_attackers = {}
+        self.vm_to_potentially_attackers = {}
         self.tag_to_potentially_attackers = {}
-        self.requests_stats = {}
         
         # For more information visit: https://networkx.org/documentation/stable/reference/classes/digraph.html
         self.tags_directed_graph = nx.DiGraph()
     
-    def add_vm(self, vm_id, potential_attackers):
-        self.vms_to_potentially_attackers[vm_id] = potential_attackers
-    
     def get_potentially_attackers(self, vm_id: str) -> list:
-        if vm_id not in self.vms_to_potentially_attackers:
+        if vm_id not in self.vm_to_potentially_attackers:
             raise KeyError(f"{vm_id} not exists in the db.")
-        potentially_attackers = self.vms_to_potentially_attackers.get(vm_id)
+        
+        potentially_attackers = self.vm_to_potentially_attackers.get(vm_id)
         potentially_attackers_ids = [vm.get("vm_id") for vm in potentially_attackers]
         return potentially_attackers_ids
+    
+    def get_vms_count(self):
+        return len(self.vm_to_potentially_attackers)
 
 
 def save_tag_to_vms(db, tags_to_vms):
@@ -57,7 +53,7 @@ def build_vms_to_potentially_attackers(db, vms):
             [tag_to_potentially_attackers[tag] for tag in vm.get("tags")])
     
     db.tag_to_potentially_attackers = tag_to_potentially_attackers
-    db.vms_to_potentially_attackers = vms_to_potentially_attackers
+    db.vm_to_potentially_attackers = vms_to_potentially_attackers
 
 
 def initialize_tags_tp_potentially_attackers(vms):

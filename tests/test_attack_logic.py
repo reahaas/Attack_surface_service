@@ -1,6 +1,6 @@
 import pytest
 
-from db_service.db_python import setup_db, build_vms_to_potentially_attackers
+from db_service.db_python import build_vms_to_potentially_attackers, DbPython
 from db_service.db_python import build_tags_directed_graph
 
 fw_rules_json_0 = [{"fw_id": "fw-82af742", "source_tag": "ssh", "dest_tag": "dev"}]
@@ -33,7 +33,7 @@ vms_json_1 = [{"vm_id": "vm-b8e6c350", "name": "rabbitmq", "tags": ["windows-dc"
 class TestAttackLogic:
     
     def setup_method(self, test_method):
-        self.db = setup_db()
+        self.db = DbPython()
         
         build_tags_directed_graph(self.db, fw_rules_json_1)
     
