@@ -1,4 +1,4 @@
-from db_service.db_python import setup_db
+from db_service.db_python import DbPython
 from loader_service.load_attack_surface_data import load_attack_surface_data
 
 
@@ -10,7 +10,7 @@ def test_load_attack_surface_data():
     """
     input_file = "data/input-0.json"
     
-    db = setup_db()
+    db = DbPython()
     load_attack_surface_data(input_file, db)
     vm_id_1 = 'vm-a211de'
     vm_id_2 = 'vm-c7bac01a07'
