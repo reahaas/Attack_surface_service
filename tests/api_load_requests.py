@@ -1,10 +1,13 @@
+"""
+Credit: https://fadeevab.com/18-lines-of-the-powerful-request-generator-with-python-asyncio-aiohttp/
+"""
 import aiohttp
 import asyncio
 
 MAXREQ = 10000
 MAXTHREAD = 50
 
-URL = 'http://localhost/v1/attack?vm_id=vm-a211de'  # 'https://google.com'
+URL = 'http://localhost/v1/attack?vm_id=vm-a211de'
 
 g_thread_limit = asyncio.Semaphore(MAXTHREAD)
 
@@ -28,4 +31,3 @@ async def main():
 if __name__ == '__main__':
     # Don't use asyncio.run() - it produces a lot of errors on exit.
     asyncio.get_event_loop().run_until_complete(main())
-
