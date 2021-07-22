@@ -34,3 +34,9 @@ class v1Handler(RequestHandler):
             raise HTTPError(status_code=404, log_message=f"vm_id [{vm_id}] not exists in the db.")
         self.write(json.dumps(potentially_attackers))
 
+
+class StatsHandler(RequestHandler):
+    def get(self):
+        # take a look at this one:
+        # https://gist.github.com/DmitryBe/07305b2fa0f5809f5016e8e29df50f11
+        self.write(self.settings)
