@@ -18,7 +18,14 @@ Here is the architecture of my system.
 ## installations:
 
 To generate the requirements file I used:
-```python3 -m  pipreqs.pipreqs .```
+```
+python3 -m  pipreqs.pipreqs .
+```
+
+To install it:
+```
+python3 -m pip install -r requirements.txt
+```
 
 
 ## Running the app:
