@@ -13,7 +13,10 @@ Here is the architecture of my system.
 3. Tornado as an HTTP server:
     Explanation: It's a great library that allows me to easily write HTTP server and focus on the logic of my app, while it gives great async features out of the box. 
 
-
+## To be Done:
+To improve the app from here on:
+1. Dockerize it: db, api.
+2. Add a real DB service instead of the `DbPython` I build. Use the same interface just with real db.
 
 ## installations:
 
