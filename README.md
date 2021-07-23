@@ -46,3 +46,21 @@ python3 -m pytest tests
 ```
 ![image](https://user-images.githubusercontent.com/35425887/126723654-06f36a3c-9d88-4503-8d8d-c7a61f8a401b.png)
 
+I added a `tests/manual_load_api_requests.py` file to check the performance of the app for big amount of requests.
+To run it, after the main app is already running, start the script:
+```
+python3 tests/manual_load_api_requests.py
+```
+The scrip will start to create big number of requests to the app.
+
+## Output example:
+1. Run the app with `input-3.json` as input file: `sudo python3 runner.py -f data/input-3.json`
+2. Start the manual script to load on the system: `python3 tests/manual_load_api_requests.py` (first edit the `vm_id` in the `URL` variable to `vm-ab51cba10`)
+3. here are the results:
+
+api call: `http://localhost/v1/attack?vm_id=vm-ab51cba10`
+![image](https://user-images.githubusercontent.com/35425887/126726509-92f1454a-1ec7-4221-bed9-d665ffca1b34.png)
+
+api call: `http://localhost/v1/stats` (After more than 100k requests)
+![image](https://user-images.githubusercontent.com/35425887/126726815-ae7f2d42-ad34-4ddf-8ab6-69046d0bfd22.png)
+
